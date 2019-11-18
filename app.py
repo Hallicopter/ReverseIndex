@@ -48,7 +48,7 @@ def createElasticSearchObj():
         pretty+='<a href="/">Search again!</a>'
         return pretty
     elif request.form['singlebutton'] == 'clear':
-        es = elasticSearch()
+        es.doc_data = {}
         return render_template('form.html') + \
             '<script>alert("Cleared Index!");</script>'
 
