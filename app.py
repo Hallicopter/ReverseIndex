@@ -32,7 +32,7 @@ def createElasticSearchObj():
         except:
             return render_template('form.html') + \
             '<script>alert("Please enter text first!");</script>'
-        if es.doc_data == {}:
+        if es.invertedIndex  == {}:
             return render_template('form.html') + \
             '<script>alert("Please index first!");</script>'
         paras = es.search(request.form['searchterm'])
@@ -48,7 +48,7 @@ def createElasticSearchObj():
         pretty+='<a href="/">Search again!</a>'
         return pretty
     elif request.form['singlebutton'] == 'clear':
-        es.doc_data = {}
+        es.invertedIndex = {}
         return render_template('form.html') + \
             '<script>alert("Cleared Index!");</script>'
 
