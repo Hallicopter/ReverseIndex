@@ -14,13 +14,13 @@ class elasticSearch:
     # it down to documents with unique ids.
     # Returns docs dict of document and IDs
     def convertToDocs(self):
-        self.raw_text = self.raw_text.lower()
-        documents = self.raw_text.split('\n\n')
+        raw_text = self.raw_text.lower()
+        documents = raw_text.split('\r\n\r')
         
         for doc in documents:
             uid = uuid.uuid4()
             self.doc_data[uid] = doc
-            # self.docIdList.append(uid)
+            
 
 
     def indexDoc(self, docId):
@@ -36,10 +36,13 @@ class elasticSearch:
                 self.invertedIndex[word] = {docId: 1}
     
     def search(self, word):
-        docIds = self.invertedIndex[word]
-        TopTenSortedDocIds = sorted(docIds.items(), key=lambda kv: kv[1]) 
-        paras = []
-        for docId in TopTenSortedDocIds:
-            print(self.doc_data[docId[0]])
-            paras.append(self.doc_data[docId[0]])
-        return paras
+        if word in self.invertedIndex:
+            docIds = self.invertedIndex[word]
+            TopTenSortedDocIds = sorted(docIds.items(), key=lambda kv: kv[1])[:10]
+            paras = []
+            for docId in TopTenSortedDocIds:
+                print(self.doc_data[docId[0]])
+                paras.append(self.doc_data[docId[0]])
+            return paras
+        else:
+            return None

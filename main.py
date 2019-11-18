@@ -17,16 +17,35 @@ def createElasticSearchObj():
         es = elasticSearch()
         es.raw_text = text
     elif request.form['singlebutton'] == 'indexDoc':
+        try:
+            es==None
+        except:
+            return render_template('form.html') + \
+            '<script>alert("Please enter text first!");</script>'
         es.convertToDocs()
         for d in es.doc_data:
             es.indexDoc(d)
+       
     elif request.form['singlebutton'] == 'search':
+        try:
+            es==None
+        except:
+            return render_template('form.html') + \
+            '<script>alert("Please enter text first!");</script>'
+        if es.doc_data == {}:
+            return render_template('form.html') + \
+            '<script>alert("Please index first!");</script>'
         paras = es.search(request.form['searchterm'])
+        if paras == None:
+            return render_template('form.html') + \
+            '<script>alert("Word not found!");</script>'
         pretty = '<ol>'
         print(paras)
         for para in paras:
             pretty+='<li>' + para + "</li>"
         pretty+='</ol>'
+
+        pretty+='<a href="/">Search again!</a>'
         return pretty
 
     # template = open('templates/form.html', 'a+')
