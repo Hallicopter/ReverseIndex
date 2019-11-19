@@ -15,7 +15,12 @@ class elasticSearch:
     # Returns docs dict of document and IDs
     def convertToDocs(self):
         raw_text = self.raw_text.lower()
-        documents = raw_text.split('\r\n\r')
+        d1 = raw_text.split('\r\n\r')
+        d2 = raw_text.split('\n\n')
+        if len(d1)>len(d2):
+            documents = d1
+        else:
+            documents = d2
         
         for doc in documents:
             uid = uuid.uuid4()

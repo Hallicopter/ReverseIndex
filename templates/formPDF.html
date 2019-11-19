@@ -1,0 +1,60 @@
+<html>
+   <body>
+      <form action = "/pdf" method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file" name = "file" />
+         <input id="submitbutton" type = "submit" name="getInput"/>
+      </form>
+
+      <form class="form-horizontal" method="POST">
+        <fieldset>
+        
+        <!-- Form Name -->
+        <legend>TapSearch!</legend>
+        
+        
+       
+      
+        <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="singlebutton"></label>
+        <div class="col-md-4">
+          <button id="singlebutton" name="singlebutton" value="indexDoc" class="btn btn-default">Index Text</button>
+        </div>
+      </div>
+      
+      <!-- Text input-->
+      <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput">Search for word.</label>  
+          <div class="col-md-4">
+          <input id="searchterm" name="searchterm" type="text" placeholder="input word" class="form-control input-md">
+            
+          </div>
+        </div>
+      
+        <!-- Button -->
+      <div class="form-group">
+          <label class="col-md-4 control-label" for="singlebutton"></label>
+          <div class="col-md-4">
+            <button id="singlebutton" name="singlebutton" value="search" class="btn btn-primary">Search!</button>
+          </div>
+        </div>
+      
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+              <button id="singlebutton" name="singlebutton" value='clear'class="btn btn-primary">Clear Index</button>
+            </div>
+          </div>
+      
+        <script type="text/javascript">
+          window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
+          </script>
+        </fieldset>
+      
+        <a href="/">Back to text</a>
+        </form>
+      
+       
+   </body>
+</html>
