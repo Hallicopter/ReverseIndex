@@ -71,7 +71,7 @@ def pdfElasticSearch():
     if 'singlebutton' not in request.form:
         pdfFileObj = request.files['file']
         pdfFileObj.save(pdfFileObj.filename)
-        text = pdf2txt.convert_pdf_to_txt(pdfFileObj.filename)
+        text = convert_pdf_to_txt(pdfFileObj.filename)
         print(text)
         es = elasticSearch()
         es.raw_text = text
