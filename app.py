@@ -1,9 +1,9 @@
 from elasticSearch import elasticSearch
 import pprint
 import pdf2txt
+import pdfkit
 
-
-from flask import Flask, render_template, flash, request
+from flask import Flask, render_template, flash, request, send_file
 # from flask import Flask
 app = Flask(__name__)
 global es
@@ -102,13 +102,16 @@ def pdfElasticSearch():
         if paras == None:
             return render_template('formPDF.html') + \
             '<script>alert("Word not found!");</script>'
-
+        
+        output = ''
         pretty = '<ol>'
         for para in paras:
+            output += ' ' + para[:] + '\n \n'
             pretty+='<li>' + para + "</li>"
         pretty+='</ol>'
         pretty+='<a href="/pdf">Search again!</a>'
-
+        pretty+='<br><a href="/out">Download output.</a>'
+        pdfkit.from_string(output, "out.pdf")
         return pretty
 
     elif request.form['singlebutton'] == 'clear':
@@ -117,6 +120,13 @@ def pdfElasticSearch():
             '<script>alert("Cleared Index!");</script>'
 
     return render_template('formPDF.html')
+
+@app.route('/out')
+def return_files_tut():
+	try:
+		return send_file('out.pdf', attachment_filename='out.pdf')
+	except Exception as e:
+		return str(e)
     
 
 if __name__ == '__main__':
