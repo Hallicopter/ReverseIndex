@@ -111,7 +111,7 @@ def pdfElasticSearch():
         pretty+='</ol>'
         pretty+='<a href="/pdf">Search again!</a>'
         pretty+='<br><a href="/out">Download output.</a>'
-        pdfkit.from_string(output, "out.pdf")
+        pdfkit.from_string(output, "/tmp/out.pdf")
         return pretty
 
     elif request.form['singlebutton'] == 'clear':
@@ -124,7 +124,7 @@ def pdfElasticSearch():
 @app.route('/out')
 def return_files_tut():
 	try:
-		return send_file('out.pdf', attachment_filename='out.pdf')
+		return send_file('/tmp/out.pdf', attachment_filename='out.pdf')
 	except Exception as e:
 		return str(e)
     
