@@ -81,7 +81,7 @@ def createElasticSearchObj():
         return pretty
 
     elif request.form['singlebutton'] == 'clear':
-        es = elasticSearch()
+        es = None
         return render_template('form.html') + \
             '<script>alert("Cleared Index!");</script>'
 
