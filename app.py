@@ -5,6 +5,18 @@ import pdfkit
 
 from flask import Flask, render_template, flash, request, send_file
 # from flask import Flask
+
+
+def merge_dict(d1, d2):
+    
+    for el in d2:
+        if el in d1:
+            d1[el].update(d2[el])
+        else:
+            d1[el] = d2[el]
+    print(d1)
+    return d1
+
 app = Flask(__name__)
 global es
 @app.route('/')
@@ -14,20 +26,35 @@ def index():
 @app.route('/', methods=['POST'])
 def createElasticSearchObj():
     global es
-    if request.form['singlebutton'] == 'getInput':
+    # if request.form['singlebutton'] == 'getInput':
+        
+    if request.form['singlebutton'] == 'indexDoc':
         text = request.form['textarea']
-        es = elasticSearch()
-        es.raw_text = text
-    elif request.form['singlebutton'] == 'indexDoc':
+        
+       
         try:
-            es==None
-        except:
-            return render_template('form.html') + \
-            '<script>alert("Please enter text first!");</script>'
+            if es!=None:
+                es_tmp = elasticSearch()
+                es_tmp.raw_text = text
+                es_tmp.convertToDocs()
+                for d in es_tmp.doc_data:
+                    es_tmp.indexDoc(d)
+                # es.invertedIndex.update(es_tmp.invertedIndex)
+                es.invertedIndex = merge_dict(es.invertedIndex, es_tmp.invertedIndex)
+                # inv_es = {v: k for k, v in my_map.items()}
+                es.doc_data.update(es_tmp.doc_data)
+                print(es.invertedIndex)
 
-        es.convertToDocs()
-        for d in es.doc_data:
-            es.indexDoc(d)
+        except:
+            es = elasticSearch()
+            es.raw_text = text
+            # return render_template('form.html') + \
+            # '<script>alert("Please enter text first!");</script>'
+            es.convertToDocs()
+            for d in es.doc_data:
+                es.indexDoc(d)
+        
+        
        
     elif request.form['singlebutton'] == 'search':
         try:
@@ -141,6 +168,8 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import StringIO
+
+
 
 def convert_pdf_to_txt(path):
     rsrcmgr = PDFResourceManager()
