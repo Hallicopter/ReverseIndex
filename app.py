@@ -141,7 +141,7 @@ def pdfElasticSearch():
         return pretty
 
     elif request.form['singlebutton'] == 'clear':
-        es.invertedIndex = {}
+        es = elasticSearch()
         return render_template('formPDF.html') + \
             '<script>alert("Cleared Index!");</script>'
 
