@@ -18,14 +18,14 @@ def merge_dict(d1, d2):
     return d1
 
 app = Flask(__name__)
-global es
+es = None
 @app.route('/')
 def index():
    return render_template('form.html')
 
 @app.route('/', methods=['POST'])
 def createElasticSearchObj():
-    global es = None
+    global es
     # if request.form['singlebutton'] == 'getInput':
         
     if request.form['singlebutton'] == 'indexDoc':
