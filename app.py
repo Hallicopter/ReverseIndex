@@ -43,7 +43,7 @@ def createElasticSearchObj():
                 es.invertedIndex = merge_dict(es.invertedIndex, es_tmp.invertedIndex)
                 # inv_es = {v: k for k, v in my_map.items()}
                 es.doc_data.update(es_tmp.doc_data)
-                print(es.invertedIndex)
+                
 
         except:
             es = elasticSearch()
@@ -54,6 +54,8 @@ def createElasticSearchObj():
             for d in es.doc_data:
                 es.indexDoc(d)
         
+        print(es.invertedIndex)
+        
         
        
     elif request.form['singlebutton'] == 'search':
@@ -61,6 +63,8 @@ def createElasticSearchObj():
         try:
             print('wooot', es.invertedIndex)
         except:
+            
+            print('No es there')
             return render_template('form.html') + \
             '<script>alert("Please enter text first!");</script>'
 
