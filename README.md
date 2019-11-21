@@ -9,6 +9,16 @@ The error handling is very minimal due to the time constraint at hand.
 3. Search by typing the term in the search textbox and hitting search. Keep searching for words till your hearts' content. Note that even though the submission text disappears, you can search for words repeatedly till you clear the index. The text is stored internally on the server, even though it doesn't reflect on the front end.
 4. Index can be cleared using a clear index button, the text would then have to be resubmitted and indexed for reuse.
 
+# Running locally
+(Note that the pdf parser still uses the old index clearing code.)
+Clone the repository.
+cd into the directory, and run the following:
+```
+sudo pip3 install -r requirements.txt
+sudo apt-get install wkhtmltopdf
+python3 app.py
+```
+
 # Input Output
 
 ## Input
