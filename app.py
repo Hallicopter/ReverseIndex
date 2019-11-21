@@ -56,29 +56,28 @@ def createElasticSearchObj():
        
     elif request.form['singlebutton'] == 'search':
         
-        try:
-            print('wooot', es.invertedIndex)
-        except:
+        if es==None:
             
+       
             print('No es there')
             return render_template('form.html') + \
             '<script>alert("Please enter text first!");</script>'
 
-       
-            
-        paras = es.search(request.form['searchterm'])
-
-        if paras == None:
-            return render_template('form.html') + \
-            '<script>alert("Word not found!");</script>'
-
-        pretty = '<ol>'
-        for para in paras:
-            pretty+='<li>' + para + "</li>"
-        pretty+='</ol>'
-        pretty+='<a href="/">Search again!</a>'
-
-        return pretty
+       else:
+            print('wooot', es.invertedIndex)
+            paras = es.search(request.form['searchterm'])
+    
+            if paras == None:
+                return render_template('form.html') + \
+                '<script>alert("Word not found!");</script>'
+    
+            pretty = '<ol>'
+            for para in paras:
+                pretty+='<li>' + para + "</li>"
+            pretty+='</ol>'
+            pretty+='<a href="/">Search again!</a>'
+    
+            return pretty
 
     elif request.form['singlebutton'] == 'clear':
         es = None
