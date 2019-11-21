@@ -136,7 +136,7 @@ def pdfElasticSearch():
         pretty+='</ol>'
         pretty+='<a href="/pdf">Search again!</a>'
         pretty+='<br><a href="/out">Download output.</a>'
-        pdfkit.from_string(output, "out.pdf")
+        # pdfkit.from_string(output, "out.pdf")
         return pretty
 
     elif request.form['singlebutton'] == 'clear':
