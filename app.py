@@ -25,32 +25,32 @@ def index():
 
 @app.route('/', methods=['POST'])
 def createElasticSearchObj():
-    global es
+    global es = None
     # if request.form['singlebutton'] == 'getInput':
         
     if request.form['singlebutton'] == 'indexDoc':
         text = request.form['textarea']
         
        
-        try:
-            if es!=None:
-                es_tmp = elasticSearch()
-                es_tmp.raw_text = text
-                es_tmp.convertToDocs()
-                for d in es_tmp.doc_data:
-                    es_tmp.indexDoc(d)
-                # es.invertedIndex.update(es_tmp.invertedIndex)
-                es.invertedIndex = merge_dict(es.invertedIndex, es_tmp.invertedIndex)
-                # inv_es = {v: k for k, v in my_map.items()}
-                es.doc_data.update(es_tmp.doc_data)
-        except:
+        
+        if es!=None:
+            es_tmp = elasticSearch()
+            es_tmp.raw_text = text
+            es_tmp.convertToDocs()
+            for d in es_tmp.doc_data:
+                es_tmp.indexDoc(d)
+            # es.invertedIndex.update(es_tmp.invertedIndex)
+            es.invertedIndex = merge_dict(es.invertedIndex, es_tmp.invertedIndex)
+            # inv_es = {v: k for k, v in my_map.items()}
+            es.doc_data.update(es_tmp.doc_data)
+        else:
             es = elasticSearch()
             es.raw_text = text
             es.convertToDocs()
             for d in es.doc_data:
                 es.indexDoc(d)
-        finally:
-            print(es.invertedIndex)
+        
+        print(es.invertedIndex)
         
         
        
